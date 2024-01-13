@@ -1,0 +1,23 @@
+<% if (locals.erros) { %>
+
+    <% locals.erros.forEach((erro) => { %>
+        <div class="alert alert-danger"><%= erro.msg %></div>
+    <% }) %>
+
+<% } %>
+
+<h2>Adicionar Categoria</h2>
+<small>Adicione uma nova categoria para ser associada as postagens.</small>
+<hr>
+
+<div class="form-control p-3">
+    <form method="post" action="/admin/categorias/adicionar">
+        <label>Nome:</label>
+        <input type="text" class="form-control mb-3" name="nome" required>
+
+        <label>Slug:</label>
+        <input type="text" class="form-control mb-3" name="slug" required>
+
+        <button type="submit" style="width: 100%;" class="btn btn-success mt-3">Cadastrar Nova Categoria</button>
+    </form>
+</div>
