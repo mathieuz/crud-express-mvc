@@ -43,7 +43,7 @@ exports.postAdicionarCategoria = (req, res) => {
             slug: slug
 
         }).save().then(() => {
-            req.flash("success_msg", "Cadastro realizado com sucesso!")
+            req.flash("success_msg", "Categoria adicionada com sucesso!")
             res.redirect("/admin/categorias")
 
         }).catch((err) => {
@@ -103,8 +103,22 @@ exports.postEditarCategoria = (req, res) => {
         }).catch(() => {
             req.flash("error_msg", "Houve um erro ao recuperar alguns recursos. Tente novamente.")
             res.redirect("/admin/categorias")
-            
+
         })
 
     }
+}
+
+exports.postDeletarCategoria = (req, res) => {
+    const docId = req.body.id
+
+    Categoria.findOneAndDelete({_id: docId}).then((categoria) => {
+        req.flash("success_msg", `Categoria '${categoria.nome}' deletada com sucesso!`)
+        res.redirect("/admin/categorias")
+
+    }).catch(() => {
+        req.flash("error_msg", "Houve um erro ao deletar a categoria. Tente novamente.")
+        res.redirect("/admin/categorias")
+
+    })
 }

@@ -14,7 +14,11 @@ router.get("/categorias", adminController.getCategorias)
 router.get("/categorias/adicionar", adminController.getAdicionarCategoria)
 router.post("/categorias/adicionar", adminController.postAdicionarCategoria)
 
+//Acesso ao formulário de edição de categoria e o endpoint que processa as mudanças feitas.
 router.get("/categorias/editar/:id", adminController.getEditarCategoria)
 router.post("/categorias/editar", adminController.postEditarCategoria)
+
+//Endpoint que processa a exclusão de uma categoria.
+router.post("/categorias/deletar", adminController.postDeletarCategoria)
 
 module.exports = router
