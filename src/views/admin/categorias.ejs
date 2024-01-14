@@ -7,14 +7,31 @@
 <% if (qtdCategorias != 0) { %>
 
     <% categorias.forEach((categoria) => { %>
+
         <div class="card bg-light mb-3">
             <div class="card-body">
-              <h5 class="card-title"><%= categoria.nome %></h5>
-              <small><%= categoria.slug %></small>
+                <h5 class="card-title"><%= categoria.nome %></h5>
+                <small><%= categoria.slug %></small>
+
+                <div class="d-flex flex-row mt-3">
+                    <a href="categorias/editar/<%= categoria._id %>" class="me-2">
+                        <button class="btn btn-primary">Editar Categoria</button>
+                    </a>
+
+                    <form method="POST" action="categorias/deletar">
+                        <button class="btn btn-outline-danger" type="submit">Excluir Categoria</button>
+                    </form>
+                </div>
             </div>
         </div>
+
     <% }) %>
     
 <% } else { %>
+
+    <div class="alert alert-warning">
+        <h5>Oops! Nenhuma categoria encontrada!</h5>
+        <p>Você pode criar uma nova categoria clicando em <b>'+ Adicionar Categoria'</b></p>
+    </div>
 
 <% } %>

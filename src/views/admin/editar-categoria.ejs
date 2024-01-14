@@ -1,0 +1,25 @@
+<% if (locals.erros) { %>
+
+    <% locals.erros.forEach((erro) => { %>
+        <div class="alert alert-danger"><%= erro.msg %></div>
+    <% }) %>
+
+<% } %>
+
+<h2>Editar Categoria: <%= categoria.nome %></h2>
+<small>Edite as informações da categoria registrada: <b><%= categoria.nome %></b>.</small>
+<hr>
+
+<div class="form-control p-3">
+    <form method="POST" action="/admin/categorias/editar">
+        <input type="hidden" name="id" value="<%= categoria._id %>">
+
+        <label>Nome:</label>
+        <input type="text" class="form-control mb-3" name="nome" value="<%= categoria.nome %>" required>
+
+        <label>Slug:</label>
+        <input type="text" class="form-control mb-3" name="slug" value="<%= categoria.slug %>" required>
+
+        <button type="submit" style="width: 100%;" class="btn btn-success mt-3">Editar Categoria</button>
+    </form>
+</div>

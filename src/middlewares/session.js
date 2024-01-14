@@ -4,7 +4,6 @@ module.exports = function() {
     return session({
         secret: "protonodejs7secret",
         resave: false,
-        saveUninitialized: true,
-        cookie: { secure: true }
+        saveUninitialized: true
     })
 }
