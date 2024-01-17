@@ -21,4 +21,10 @@ router.post("/categorias/editar", adminController.postEditarCategoria)
 //Endpoint que processa a exclusão de uma categoria.
 router.post("/categorias/deletar", adminController.postDeletarCategoria)
 
+//Endpoints referente às postagens.
+router.get("/postagens", adminController.getPostagens)
+
+router.get("/postagens/adicionar", adminController.getAdicionarPostagem)
+router.post("/postagens/adicionar", adminController.postAdicionarPostagem)
+
 module.exports = router

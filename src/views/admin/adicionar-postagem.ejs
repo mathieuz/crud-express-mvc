@@ -1,0 +1,48 @@
+<h2>Adicionar Postagem</h2>
+<small>Adicione uma nova postagem para o blog.</small>
+<hr>
+
+<% if (qtdCategorias === 0) { %>
+    <div class="alert alert-warning"><b>Não há categorias registradas!</b> Registre uma nova categoria <a href="/admin/categorias/adicionar">aqui</a> para associá-la a nova postagem.</div>
+<% } %>
+
+<% if (locals.erros) { %>
+
+    <% locals.erros.forEach((erro) => { %>
+        <div class="alert alert-danger"><%= erro.msg %></div>
+    <% }) %>
+
+<% } %>
+
+<div class="form-control p-3">
+    <form method="POST" action="/admin/postagens/adicionar">
+        <label>Título:</label>
+        <input type="text" class="form-control mb-3" name="titulo" required>
+
+        <label>Descrição:</label>
+        <input type="text" class="form-control mb-3" name="descricao" required>
+
+        <label>Slug:</label>
+        <input type="text" class="form-control mb-3" name="slug" required>
+
+        <label>Categoria</label>
+        <select class="form-control mb-3" name="categoria">
+
+            <% if (qtdCategorias > 0) { %>
+                <% categorias.forEach((categoria) => { %>
+                    <option value="<%= categoria._id %>"><%= categoria.nome %></option>
+                <% }) %>
+
+            <% } else { %>
+                <option value="0" selected>Não há categorias registradas.</option>
+
+            <% } %>
+
+        </select>
+
+        <label>Conteúdo:</label>
+        <textarea class="form-control" style="resize: none; height: 170px;" name="conteudo"></textarea>
+
+        <button type="submit" style="width: 100%;" class="btn btn-success mt-3">Adicionar Nova Postagem</button>
+    </form>
+</div>

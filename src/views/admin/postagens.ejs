@@ -1,0 +1,36 @@
+<h2>Postagens</h2>
+<small>Crie e gerencie todas as postagens do blog.</small>
+<hr>
+
+<a href="postagens/adicionar"><button class="btn btn-outline-success mb-3">+ Criar Postagem</button></a>
+
+<% if (qtdPostagens > 0) { %>
+
+    <% postagens.forEach((postagem) => { %>
+        <div class="card mt-3">
+            <div class="card-header">Categoria: <%= postagem.categoria.nome %></div>
+            <div class="card-body">
+                <h5><%= postagem.titulo %></h5>
+                <p><%= postagem.descricao %></p>
+
+                <div class="d-flex flex-row mt-3">
+                    <a href="/admin/postagens/editar/<%= postagem._id %>" class="me-2">
+                        <button class="btn btn-primary">Editar Postagem</button>
+                    </a>
+
+                    <form method="POST" action="/admin/postagens/deletar">
+                        <input type="hidden" name="id" value="<%= postagem._id %>">
+                        <button class="btn btn-outline-danger" type="submit">Excluir Postagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+
+<% } else { %>
+    <div class="alert alert-warning">
+        <h5>Opa! Nenhuma postagem feita ainda.</h5>
+        <p>Você pode criar uma nova postagem clicando em <b>'+ Criar Postagem'</b></p>
+    </div>
+
+<% } %>

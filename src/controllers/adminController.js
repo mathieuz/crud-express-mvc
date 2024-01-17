@@ -1,5 +1,6 @@
 //Importando models necessárias
 const Categoria = require("../models/Categoria")
+const Postagem = require("../models/Postagem")
 
 //Criando Controllers
 
@@ -121,4 +122,79 @@ exports.postDeletarCategoria = (req, res) => {
         res.redirect("/admin/categorias")
 
     })
+}
+
+exports.getPostagens = (req, res) => {
+    Postagem.find().populate("categoria", "nome").then((postagens) => {
+        res.render("admin/postagens", {
+            postagens: postagens,
+            qtdPostagens: postagens.length
+        })
+
+    })
+}
+
+exports.getAdicionarPostagem = (req, res) => {
+    Categoria.find().then((categorias) => {
+        res.render("admin/adicionar-postagem", {categorias: categorias, qtdCategorias: categorias.length})
+
+    }).catch(() => {
+        req.flash("error_msg", "Houve um erro ao recuperar alguns recursos. Tente novamente.")
+        res.redirect("/admin/categorias")
+
+    })
+}
+
+exports.postAdicionarPostagem = (req, res) => {
+    const { titulo, descricao, slug, categoria, conteudo } = req.body
+
+    let erros = []
+
+    if (!titulo) {
+        erros.push({msg: "Campo de título está vazio."})
+    }
+
+    if (!descricao) {
+        erros.push({msg: "Campo de descrição está vazio."})
+    }
+
+    if (!slug) {
+        erros.push({msg: "Campo de slug está vazio."})
+    }
+
+    if (!conteudo) {
+        erros.push({msg: "Campo de conteúdo está vazio."})
+    }
+
+    if (categoria === "0") {
+        erros.push({msg: "É necessário associar uma categoria a postagem."})
+    }
+
+    if (erros.length === 0) {
+        new Postagem({
+            titulo: titulo,
+            descricao: descricao,
+            slug: slug,
+            categoria: categoria,
+            conteudo: conteudo
+
+        }).save().then(() => {
+            req.flash("success_msg", "Postagem adicionada com sucesso!")
+            res.redirect("/admin/postagens")
+
+        }).catch((err) => {
+            req.flash("error_msg", "Houve um erro ao salvar a postagem. Tente novamente.")
+            res.redirect("/admin/postagens/adicionar")
+        })
+
+    } else {
+        Categoria.find().then((categorias) => {
+            res.render("admin/adicionar-postagem", {erros: erros, qtdCategorias: categorias.length})
+
+        }).catch(() => {
+            req.flash("error_msg", "Erro ao criar a nova postagem. Tente novamente.")
+            res.redirect("/admin/postagens/adicionar")
+
+        })
+    }
 }

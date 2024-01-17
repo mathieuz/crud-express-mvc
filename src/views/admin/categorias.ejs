@@ -14,11 +14,11 @@
                 <small><%= categoria.slug %></small>
 
                 <div class="d-flex flex-row mt-3">
-                    <a href="categorias/editar/<%= categoria._id %>" class="me-2">
+                    <a href="/admin/categorias/editar/<%= categoria._id %>" class="me-2">
                         <button class="btn btn-primary">Editar Categoria</button>
                     </a>
 
-                    <form method="POST" action="categorias/deletar">
+                    <form method="POST" action="/admin/categorias/deletar">
                         <input type="hidden" name="id" value="<%= categoria._id %>">
                         <button class="btn btn-outline-danger" type="submit">Excluir Categoria</button>
                     </form>
