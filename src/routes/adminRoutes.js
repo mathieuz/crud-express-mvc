@@ -27,4 +27,9 @@ router.get("/postagens", adminController.getPostagens)
 router.get("/postagens/adicionar", adminController.getAdicionarPostagem)
 router.post("/postagens/adicionar", adminController.postAdicionarPostagem)
 
+router.get("/postagens/editar/:id", adminController.getEditarPostagem)
+router.post("/postagens/editar", adminController.postEditarPostagem)
+
+router.post("/postagens/deletar", adminController.postDeletarPostagem)
+
 module.exports = router

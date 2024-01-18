@@ -1,0 +1,45 @@
+<h2>Editar Postagem</h2>
+<small>Editar Postagem: <b><%= postagem.titulo %></b></small>
+<hr>
+
+<div class="form-control p-3">
+    <form method="POST" action="/admin/postagens/editar">
+        <input type="hidden" name="id" value="<%= postagem._id %>">
+        <label>Título:</label>
+        <input type="text" class="form-control mb-3" name="titulo" value="<%= postagem.titulo %>" required>
+
+        <label>Descrição:</label>
+        <input type="text" class="form-control mb-3" name="descricao" value="<%= postagem.descricao %>" required>
+
+        <label>Slug:</label>
+        <input type="text" class="form-control mb-3" name="slug" value="<%= postagem.slug %>" required>
+
+        <label>Categoria</label>
+        <select class="form-control mb-3" name="categoria">
+
+            <% if (qtdCategorias > 0) { %>
+                <% categorias.forEach((categoria) => { %>
+
+                    <% if (categoria.nome === postagem.categoria.nome) { %>
+                        <option value="<%= categoria._id %>" selected><%= categoria.nome %></option>
+
+                    <% } else { %>
+                        <option value="<%= categoria._id %>"><%= categoria.nome %></option>
+
+                    <% } %>
+
+                <% }) %>
+
+            <% } else { %>
+                <option value="0" selected>Não há categorias registradas.</option>
+
+            <% } %>
+
+        </select>
+
+        <label>Conteúdo:</label>
+        <textarea class="form-control" style="resize: none; height: 170px;" name="conteudo"><%= postagem.conteudo %></textarea>
+
+        <button type="submit" style="width: 100%;" class="btn btn-success mt-3">Editar Postagem</button>
+    </form>
+</div>

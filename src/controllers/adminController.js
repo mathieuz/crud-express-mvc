@@ -198,3 +198,84 @@ exports.postAdicionarPostagem = (req, res) => {
         })
     }
 }
+
+exports.getEditarPostagem = (req, res) => {
+    const docId = req.params.id
+
+    Postagem.findById(docId)
+    .populate("categoria", "nome")
+    .then((postagem) => {
+        Categoria.find().then((categorias) => {
+            res.render("admin/editar-postagem", {postagem: postagem, categorias: categorias, qtdCategorias: categorias.length})
+        })
+
+    }).catch(() => {
+        req.flash("error_msg", "Houve um erro ao recuperar alguns recursos. Tente novamente.")
+        res.redirect("/admin/postagens")
+    })
+}
+
+exports.postEditarPostagem = (req, res) => {
+    const {id, titulo, descricao, slug, categoria, conteudo} = req.body
+
+    let erros = []
+
+    if (!titulo) {
+        erros.push({msg: "Campo de título está vazio."})
+    }
+
+    if (!descricao) {
+        erros.push({msg: "Campo de descrição está vazio."})
+    }
+
+    if (!slug) {
+        erros.push({msg: "Campo de slug está vazio."})
+    }
+
+    if (!conteudo) {
+        erros.push({msg: "Campo de conteúdo está vazio."})
+    }
+
+    if (categoria === "0") {
+        erros.push({msg: "É necessário associar uma categoria a postagem."})
+    }
+
+    if (erros.length === 0) {
+        Postagem.findById(id).then((postagem) => {
+            postagem.titulo = titulo
+            postagem.descricao = descricao
+            postagem.slug = slug
+            postagem.categoria = categoria
+            postagem.conteudo = conteudo
+
+            postagem.save().then(() => {
+                req.flash("success_msg", "Postagem editada com sucesso!")
+                res.redirect("/admin/postagens")
+
+            }).catch(() => {
+                req.flash("error_msg", "Houve um erro ao salvar as alterações. Tente novamente.")
+                res.redirect("/admin/postagens/editar/" + id)
+            })
+
+        }).catch(() => {
+            req.flash("error_msg", "Houve um erro ao recuperar alguns recursos. Tente novamente.")
+            res.redirect("/admin/postagens")
+
+        })
+    }
+}
+
+exports.postDeletarPostagem = (req, res) => {
+    const docId = req.body.id
+
+    Postagem.findByIdAndDelete(docId).then(() => {
+        req.flash("success_msg", "Postagem deletada com sucesso!")
+        res.redirect("/admin/postagens")
+
+    }).catch(() => {
+        req.flash("error_msg", "Houve um erro ao deletar a postagem. Tente novamente.")
+        res.redirect("/admin/postagens")
+
+    })
+    
+}
