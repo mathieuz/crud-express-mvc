@@ -1,0 +1,38 @@
+<h2>Categoria: <%= categoriaNome %></h2>
+<% if (qtdPostagens > 1) { %>
+    <p>Há <%= qtdPostagens %> postagens associadas a esta categoria.</p>
+
+<% } else if (qtdPostagens === 1) { %>
+    <p>Há apenas uma postagem associada a esta categoria.</p>
+
+<% } else { %>
+    <p>Não há postagens associadas a esta categoria.</p>
+
+<% } %>
+
+<hr>
+
+<% if (qtdPostagens > 0) { %>
+
+    <% postagens.forEach((postagem) => { %>
+        <div class="card mt-3">
+            <div class="card-header">Categoria: <%= postagem.categoria.nome %></div>
+            <div class="card-body">
+                <h5><%= postagem.titulo %></h5>
+                <p><%= postagem.descricao %></p>
+
+                <div class="d-flex flex-row mt-3">
+                    <a href="/postagem/<%= postagem.slug %>" class="me-2">
+                        <button class="btn btn-primary">Ler Post</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+
+<% } else { %>
+    <div class="alert alert-warning">
+        <h5>Nenhuma postagem encontrada para esta categoria.</h5>
+        <p>Você pode conferir outras postagens <a href="/">clicando aqui</a>.</b></p>
+    </div>
+<% } %>

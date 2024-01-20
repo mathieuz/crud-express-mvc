@@ -1,0 +1,16 @@
+<h2>Categorias</h2>
+<p>Busque por postagens de um assunto especifico a partir de uma categoria específica.</p>
+<hr>
+
+<% if (qtdCategorias > 0) { %>
+    <% categorias.forEach(categoria => { %>
+        <h4><a href="/categorias/<%= categoria.slug %>"><%= categoria.nome %></a></h4>
+
+    <% }) %>
+
+<% } else { %>
+    <div class="alert alert-warning">
+        <h5>Nenhuma categoria foi encontrada!</h5>
+        <p>Volte mais tarde para conferir as categorias registradas.</b></p>
+    </div>
+<% } %>
