@@ -1,1 +1,37 @@
-<h3>Olá, mundo!</h3>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">BlogTech</h1>
+    <p class="lead">Seu canal de notícias sobre programação e tecnologia principal!</p>
+  </div>
+</div>
+
+<br>
+
+<h3>Últimas atualizações</h3>
+<hr>
+
+<% if (qtdPostagens > 0) { %>
+    
+    <% postagens.forEach((postagem) => { %>
+        <div class="card mt-3">
+            <div class="card-header">Categoria: <%= postagem.categoria.nome %></div>
+            <div class="card-body">
+                <h5><%= postagem.titulo %></h5>
+                <p><%= postagem.descricao %></p>
+
+                <div class="d-flex flex-row mt-3">
+                    <a href="/postagem/<%= postagem.slug %>" class="me-2">
+                        <button class="btn btn-primary">Ler Post</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    <% }) %>
+
+<% } else { %>
+    <div class="alert alert-warning">
+        <h5>Nenhuma postagem por enquanto...</h5>
+        <p>Volte mais tarde para conferir as próximas atualizações!</b></p>
+    </div>
+<% } %>

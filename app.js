@@ -25,7 +25,7 @@ app.use(flash()) //Utilizando flash para mensagens flash.
 app.use(sessionmiddleware()) //Utilizando middleware de sessão
 
 //Inicialização das rotas
-const indexRoutes = require("./src/routes/index")
+const indexRoutes = require("./src/routes/indexRoutes")
 const adminRoutes = require("./src/routes/adminRoutes")
 
 app.use("/", indexRoutes)
