@@ -1,5 +1,5 @@
 <h3><%= postagem.titulo %></h3>
-<p title="Ver mais de <%= postagem.categoria.nome %>">Categoria: <a href="" class="badge bg-info"><%= postagem.categoria.nome %></a></p>
+<p title="Ver mais de <%= postagem.categoria.nome %>">Categoria: <a href="/categorias/<%= postagem.categoria.slug %>" class="badge bg-info"><%= postagem.categoria.nome %></a></p>
 
 <hr>
 
