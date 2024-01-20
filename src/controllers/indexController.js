@@ -11,7 +11,7 @@ exports.getIndex = (req, res) => {
 exports.getPostagem = (req, res) => {
     const slug = req.params.slug
 
-    Postagem.findOne({slug: slug}).populate("categoria", "nome").then((postagem) => {
+    Postagem.findOne({slug: slug}).populate("categoria", "nome slug").then((postagem) => {
         //Verificando se a postagem existe.
         if (postagem) {
             res.render("index/postagem", {postagem: postagem})
