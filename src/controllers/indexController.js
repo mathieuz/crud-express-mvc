@@ -1,6 +1,10 @@
-const Postagem = require("../models/Postagem")
-const Categorias = require("../models/Categoria")
-const Categoria = require("../models/Categoria")
+//Módulos
+const bcrypt = require("bcryptjs")
+
+//Models
+const Postagem = require("../models/Postagem"),
+      Categoria = require("../models/Categoria"),
+      Usuario = require("../models/Usuario")
 
 exports.getIndex = (req, res) => {
     Postagem.find()
@@ -57,4 +61,60 @@ exports.getCategoriaPostagens = (req, res) => {
 
         }
     })
+}
+
+//Acesso página de registro de usuários.
+exports.getRegistrar = (req, res) => {
+    res.render("index/registrar")
+}
+
+exports.postRegistrar = (req, res) => {
+    const { nome, email, senha, confirmarSenha } = req.body
+
+    let erros = []
+
+    //Comparando os campos:
+    if (!nome) {
+        erros.push({msg: "Campo de nome está vazio."})
+    }
+
+    if (!email) {
+        erros.push({msg: "Campo de e-mail está vazio."})
+    }
+
+    if (!confirmarSenha) {
+        erros.push({msg: "Campo de confirmar senha está vazio."})
+    }
+
+    if (!senha) {
+        erros.push({msg: "Campo de senha está vazio"})
+
+    } else if (senha != confirmarSenha) {
+        erros.push({msg: "As senhas inseridas não conferem. Tente novamente."})
+    }
+
+    //Verificando se há erros ou não para cadastrar o usuário no banco.
+    if (erros.length === 0) {
+
+        //Hasheando a senha antes de cadastrar no banco de dados.
+        const senhaHash = bcrypt.hashSync(senha, bcrypt.genSaltSync(10))
+
+        new Usuario({
+            nome: nome,
+            email: email,
+            senha: senhaHash
+
+        }).save().then(() => {
+            req.flash("success_msg", "Você foi registrado com sucesso!")
+            res.redirect("/")
+
+        }).catch(() => {
+            req.flash("error_msg", "Houve um erro ao tentar realizar o cadastro. Tente novamente.")
+            res.redirect("/registrar")
+
+        })
+
+    } else {
+        res.render("index/registrar", {erros: erros})
+    }
 }

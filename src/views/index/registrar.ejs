@@ -1,0 +1,27 @@
+<% if (locals.erros) { %>
+    <% erros.forEach((erro) => { %>
+        <div class="alert alert-danger"><%= erro.msg %></div>
+    <% }) %>
+<% } %>
+
+<h2>Registrar-se</h2>
+<small>Crie uma conta para aproveitar ainda mais todos os nossos conteúdos!</small>
+<hr>
+
+<div class="form-control p-3">
+    <form method="POST" action="/registrar">
+        <label>Nome:</label>
+        <input type="text" class="form-control mb-3" name="nome" required>
+
+        <label>E-mail:</label>
+        <input type="email" class="form-control mb-3" name="email" required>
+
+        <label>Senha:</label>
+        <input type="password" class="form-control mb-3" name="senha" required>
+
+        <label>Confirme a Senha:</label>
+        <input type="password" class="form-control mb-3" name="confirmarSenha" required>
+
+        <button type="submit" style="width: 100%;" class="btn btn-success mt-3">Registrar!</button>
+    </form>
+</div>
