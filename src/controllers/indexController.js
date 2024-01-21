@@ -7,6 +7,8 @@ const Postagem = require("../models/Postagem"),
       Usuario = require("../models/Usuario")
 
 exports.getIndex = (req, res) => {
+    console.log(req.session.usuarioId ? "Está logado." : "Não está logado.")
+
     Postagem.find()
     .populate("categoria", "nome")
     .then((postagens) => {
@@ -116,5 +118,55 @@ exports.postRegistrar = (req, res) => {
 
     } else {
         res.render("index/registrar", {erros: erros})
+    }
+}
+
+exports.getLogin = (req, res) => {
+    res.render("index/login")
+}
+
+exports.postLogin = (req, res) => {
+    const { email, senha } = req.body
+
+    let erros = []
+
+    if (!email) {
+        erros.push({msg: "O e-mail não foi informado."})
+    }
+
+    if (!senha) {
+        erros.push({msg: "A senha não foi informada."})
+    }
+
+    //Verificando se há erros para executar os proximos procedimentos.
+    //Se não, é porque os campos foram informados...
+    if (erros.length === 0) {
+        Usuario.findOne({email: email}).then((usuario) => {
+
+            //Verificando se o usuário existe.
+            if (usuario) {
+
+                const auth = bcrypt.compareSync(senha, usuario.senha)
+
+                //auth recebe se as senhas batem. Se sim, o usuário é logado.
+                if (auth) {
+                    req.session.usuarioId = usuario._id //Armazenando a id do usuário na propriedade da sessão 'usuarioId'.
+
+                    req.flash("success_msg", "Login feito com sucesso!")
+                    res.redirect("/")
+
+                } else {
+                    req.flash("error_msg", "Senha incorreta.")
+                    res.redirect("/login")
+                }
+
+            } else {
+                req.flash("error_msg", "A conta informada não existe.")
+                res.redirect("/login")
+            }
+        })
+
+    } else {
+        res.render("index/login", {erros: erros})
     }
 }

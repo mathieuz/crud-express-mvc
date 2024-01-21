@@ -16,4 +16,8 @@ router.get("/categorias/:slug", indexController.getCategoriaPostagens)
 router.get("/registrar", indexController.getRegistrar)
 router.post("/registrar", indexController.postRegistrar)
 
+//Endpoints de login do usuário.
+router.get("/login", indexController.getLogin)
+router.post("/login", indexController.postLogin)
+
 module.exports = router

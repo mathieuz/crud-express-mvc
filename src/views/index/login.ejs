@@ -1,0 +1,21 @@
+<h2>Fazer Login</h2>
+<small>Acesse sua conta e comece a descobrir todos os conteúdos. Não tem uma conta? <a href="/registrar">Registre-se agora mesmo</a>.</small>
+<hr>
+
+<% if (locals.erros) { %>
+    <% erros.forEach((erro) => { %>
+        <div class="alert alert-danger"><%= erro.msg %></div>
+    <% }) %>
+<% } %>
+
+<div class="form-control p-3">
+    <form method="POST" action="/login">
+        <label>E-mail:</label>
+        <input type="email" class="form-control mb-3" name="email" required>
+
+        <label>Senha:</label>
+        <input type="password" class="form-control mb-3" name="senha" required>
+
+        <button type="submit" style="width: 100%;" class="btn btn-outline-success mt-3">Fazer Login</button>
+    </form>
+</div>

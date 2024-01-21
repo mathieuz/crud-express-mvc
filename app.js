@@ -31,6 +31,12 @@ const adminRoutes = require("./src/routes/adminRoutes")
 app.use("/", indexRoutes)
 app.use("/admin", adminRoutes)
 
+//Encerrando sessão
+app.get("/del", (req, res) => {
+    req.session.destroy()
+    res.redirect("/")
+})
+
 //Inicialização do servidor
 const PORT = process.env.PORT || 4085
 const HOST = process.env.HOST || "localhost"
