@@ -5,7 +5,7 @@
 const Usuario = require("../models/Usuario")
 
 module.exports = (req, res, next) => {
-    //Verifica se ele está logado.
+    //Verifica se o usuário está logado.
     if (req.session.usuarioId) {
 
         //Verfica se quem está logado possui permissão (isAdmin == true)
